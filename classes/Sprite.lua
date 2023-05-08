@@ -13,32 +13,44 @@ local Sprite = {
 
 
 function Sprite:GetSize()
-    if not self._sprite or not self.src then
+    if not self._drawable or not self.src then
         error("No sprite to look into")
     end
     local anim = self.src.anim[self.anim]
     return anim[3], anim[4]
 end
 
-function Sprite:PlayAnim( anim, loop, rate, len)
-    local r = self.rate
-    if anim > #self.src.anim then 
-        return error("No such animation")
+function Sprite:PlayAnim( anim, loop, rate, len, start)
+    start = start or 1
+    if anim > #self.src.anim or anim < 1 then 
+        return error("PlayAnim: No animation "..tostring(anim))
     end
     if self.anim ~= anim then
         self.frame = 1
-        
+        self.anim = anim
     end
-    self.anim = anim
+    
     self.rate = self.rate + 1
-    if r >= rate then
+    
+    if self.rate > rate then
         local af = self.frame
-        af = af + 1
-        af = af > len and (loop and 1 or 0) or af
-        self.rate = 0
-        self.frame = af
+        
+        self.frame = self.frame + 1
+
+        if self.frame > len then
+            if loop then
+                self.frame = start
+            else
+                self.frame = 0
+            end
+        end
+        
+        
+        self.rate = 1
+        
         return;
     end
+    
 end
 
 function Sprite.newSimple(new)
@@ -83,7 +95,7 @@ function Sprite.newSheet(new)
 end
 
 function Sprite:CopySprite(copy)
-    copy._sprite = self._sprite
+    copy._drawable = self._drawable
     copy.size = self.size
     copy.origin = self.origin
     copy.color = self.color
@@ -97,9 +109,9 @@ end
 function Sprite:isSprite(spr)
     local t = type(spr)
     if t == 'userdata' then
-        return self._sprite == spr;
+        return self._drawable == spr;
     elseif t == 'table' then
-        return self._sprite == spr._sprite;
+        return self._drawable == spr._drawable;
     end
 
     return nil

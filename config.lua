@@ -1,6 +1,7 @@
 startscene = 1
 
 SceneEnum = {
+    "menu";
     "Info";
     "res";
     name = "SceneEnum"
@@ -8,14 +9,16 @@ SceneEnum = {
 
 defaultScene = "res.default";
 
-fullscreen = true
-
+-- fullscreen = true
+fixedframed = true
+PLAY = 'both'
+CHAR_CHOICE = false
 luatitle = "Catch O\'Run"
 _en ={
-    dt = 0.015;
+    dt = 1/64;
     screen = {size = "640x320", name = "screen"};
     1;
     name = "_en";
 }
 
-_en.screen.w, _en.screen.h = WxHtoints(_en.screen.size)
+_en.screen.w, _en.screen.h = LE.WxHtoints(_en.screen.size)

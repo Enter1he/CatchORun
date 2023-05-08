@@ -1,6 +1,6 @@
 local screen = _en.screen
 
-local order, list = Lalloc(1), Lalloc(1)
+local order, list = LE.Lalloc(1), LE.Lalloc(1)
 
 
 local Layer = {

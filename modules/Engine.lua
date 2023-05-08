@@ -1,8 +1,9 @@
-package.cpath = "./lib/?.dll;./lib/?53.dll;"..package.cpath
+
 package.loaded.name = "loaded"
 ---------------------------------       ENGINE_PART        ----------------------------------
 
 OOP = require"modules.OOP"
+
 Util = require"modules.Util"
 
 EmptyFunc = function() end
@@ -11,16 +12,10 @@ require"modules.Controls"
 
 
 
-
-Audio = require"Audio"
-Graphics = require"Graphics"
-
 Fonts = Fonts or "C:/Windows/Fonts/" -- Windows font's folder
 
 
 local screen = _en.screen
-
-
 
 _mouse = {0,0}
 
@@ -56,6 +51,25 @@ function NewScene(scene)
 
     setmetatable(scene, Destructor)
     return scene
+end
+
+function LE.ChangeSceneStr(folder)
+    local l = package.loaded[folder..".root"]
+    local i = 0
+    
+    for j = 1, #(SceneEnum) do
+        if folder == SceneEnum[j] then
+            i = j
+            break
+        end
+    end
+    if i ~= 0 then
+        LE.ChangeScene(i)
+    end
+end
+
+function LE.isSceneLoaded(folder)
+    return package.loaded[folder..".root"]
 end
 
 Layer = require"classes.Layer"

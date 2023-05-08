@@ -1,9 +1,9 @@
-local dt = _en.dt
+local dt = 1/64
 
 local Sprite = require"classes.Sprite"
 
 local Mob = {
-    pos = {0,0};
+    pos = {0,0,0};
     vel = {0,0};
     over = true;
     to = 1;
@@ -55,8 +55,8 @@ function Mob:Vel_Move()
     if vel[1] ~= 0 and vel[2] ~= 0 then
         vel[1] = hlfv*vel[1]; vel[2] = hlfv*vel[2]
     end
-    pos[1] = pos[1] + int(vel[1] * sdt)
-    pos[2] = pos[2] + int(vel[2] * sdt)
+    pos[1] = pos[1] + LE.int(vel[1] * sdt)
+    pos[2] = pos[2] + LE.int(vel[2] * sdt)
 end
 
 local atan = math.atan
@@ -125,7 +125,7 @@ function Mob:RMoveTo(from, to)
     end
 end
 
-local ptime = Lalloc(1)
+local ptime = LE.Lalloc(1)
 local sqrt = math.sqrt
 function Mob:GetTo(x,y, time)
     time = time or 1
